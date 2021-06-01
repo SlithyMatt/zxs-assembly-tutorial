@@ -19,7 +19,7 @@ with these code examples - it is all [free and open source](LICENSE).
 ## Tools Recommended
 - Text Editor: [Atom](https://atom.io/)
    - Packages: [file-types](https://atom.io/packages/file-types), [language-z80asm](https://atom.io/packages/language-z80asm)
-- Emulator: [ZEsarUX](https://sourceforge.net/projects/zesarux/)
+- Emulator: [ZEsarUX](https://github.com/chernandezba/zesarux)
 
 ## Further Reading
 
