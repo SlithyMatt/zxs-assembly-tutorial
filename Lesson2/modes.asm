@@ -7,11 +7,16 @@
 string:
    db "hello"
 
-STRING_LENGTH = 5
-ENTER = $0D
+STRING_LENGTH  = 5
+
+ROM_CLS        = $0DAF  ; ROM address for "Clear Screen" routine
+COLOR_ATTR     = $5800  ; start of color attribute memory
+ENTER          = $0D    ; Character code for Enter key
+BLACK_WHITE    = $47    ; black paper, white ink
 
 start:
-   im 1                 ; Set interrupt mode to 1
+   im 1                 ; Set interrupt mode to 1 (interrupt mode)
+   call ROM_CLS         ; Call clear screen routine from ROM (extended immediate)
    ld hl,string         ; HL = address of string (register,extended immediate)
    ld b,STRING_LENGTH   ; B = length of string (register,immediate)
 loop:
@@ -22,6 +27,10 @@ loop:
    jr nz,loop           ; if B not zero, jump back to top of loop (condition,relative)
    ld a,ENTER           ; A = Enter character code (register,immediate)
    rst $10              ; print Enter for new line (modified page zero)
+
+   ; Let's change the color of the first character we printed
+   ld a,BLACK_WHITE     ; A = black/white color attribute (register,immediate)
+   ld (COLOR_ATTR),a    ; Color attribute(0,0) = A (extended,register)
 
    ; Let's do it again, but unrolled and with the first letter capitalized
    ld ix,string         ; IX = address of string (register,extended immediate)
