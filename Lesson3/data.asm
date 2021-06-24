@@ -20,7 +20,7 @@ bitmap_loop:
    srl (hl)          ; shift pattern to right once more
    ld de,$45FF
    ldd               ; copy new pattern to end of next block, decrement DE
-   ld bc,$1FF
+   ld bc,$1FE
    ld hl,$45FF
    lddr              ; fill in third block backwards
    ld hl,$4600
@@ -29,7 +29,7 @@ bitmap_loop:
    ld bc,$1FF
    exx               ; we'll get back to the fourth block later
    ld hl,$5800
-   ld (hl),$41       ; white ink on black paper
+   ld (hl),$41       ; blue ink on black paper
    ld de,$5801
    ld bc,$FF
 color_loop:
@@ -48,4 +48,4 @@ next:
    ret
 
 ; Deployment: Snapshot
-   SAVESNA "load.sna", start
+   SAVESNA "data.sna", start
