@@ -55,5 +55,6 @@ dkms.conf
 *.bin
 *.tap
 *.sna
+*.szx
 .~*
 ~*
