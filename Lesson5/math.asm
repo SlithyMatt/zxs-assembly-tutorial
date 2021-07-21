@@ -10,21 +10,19 @@ start:
    ld b,57
    sub a,b  ; 42 - 57 = 241 + borrow (overflow)
    call printv
-   sub a,b  ; 241 - 57 = 184
+   sub a,b  ; 241 - 57 = 184 (H)
    call printv
-   sub a,b  ; 21 + 220 = 190 + carry
+   ld b,180
+   sub a,b  ; 184 - 180 = 4 (overflow)
    call printv
-   ld b,42
-   sub a,b  ; 190 + 42 = 232
+   sub a,b  ; 4 - 180 = 80 + borrow
    call printv
-   ld b,128
-   sub a,b  ; 232 + 128 = 104 + carry (overflow)
+   sub a,b  ; 80 - 180 = 156 + borrow (H)
    call printv
-   ld b,42
-   sub a,b  ; 104 + 42 = 146 (overflow)
+   sub a,b  ; 156 - 180 = 232 + borrow
    call printv
-   ld b,110
-   sub a,b  ; 146 + 110 = 0 + carry
+   ld b,232
+   sub a,b  ; 232 - 232 = 0
    call printv
    ret
 
