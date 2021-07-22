@@ -9,19 +9,8 @@ start:
    ld hl,$1234
    ld de,$5678
    add hl,de ; HL = $68AC
-   ld c,$ff
-   push bc
-   pop af
-   add hl,de ; HL = $BF24 (overflow?)
-   ld hl,$9ABC
-   add hl,de ; HL = $F134
-   ld de,$1234
-   add hl,de ; HL = $0368 + carry
-   ld de,$89AB
-   ld hl,$CDEF
-   add hl,de ; HL = $579A + carry (overflow?)
-   ld de,$A866
-   add hl,de ; HL = 0
+   ld ix,$9ABC
+   add ix,de
    ret
 
 printv:
