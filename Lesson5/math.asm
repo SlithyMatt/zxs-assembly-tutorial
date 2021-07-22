@@ -10,7 +10,10 @@ start:
    ld de,$5678
    add hl,de ; HL = $68AC
    ld ix,$9ABC
-   add ix,de
+   adc ix,de ; IX = $F134
+   sbc ix,de ; IX = $9ABC
+   ld de,$8000
+   sbc hl,de ; HL = $E8AC + carry (overflow)
    ret
 
 printv:
