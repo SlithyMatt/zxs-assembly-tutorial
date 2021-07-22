@@ -8,22 +8,25 @@ start:
    pop af
    ld a,42
    ld b,57
-   sub a,b  ; 42 - 57 = 241 + borrow (overflow)
-   call printv
-   sub a,b  ; 241 - 57 = 184 (H)
-   call printv
+   sub b  ; 42 - 57 = 241 + borrow
+   ;call printv
+   sub b  ; 241 - 57 = 184 (H)
+   ;call printv
    ld b,180
-   sub a,b  ; 184 - 180 = 4 (overflow)
-   call printv
-   sub a,b  ; 4 - 180 = 80 + borrow
-   call printv
-   sub a,b  ; 80 - 180 = 156 + borrow (H)
-   call printv
-   sub a,b  ; 156 - 180 = 232 + borrow
-   call printv
-   ld b,232
-   sub a,b  ; 232 - 232 = 0
-   call printv
+   sub b  ; 184 - 180 = 4
+   ;call printv
+   sub b  ; 4 - 180 = 80 + borrow
+   ;call printv
+   sub b  ; 80 - 180 = 156 + borrow (H, overflow)
+   ;call printv
+   sub b  ; 156 - 180 = 232 + borrow
+   ;call printv
+   ld b,110
+   sub b  ; 232 - 110 = 122 (H, overflow)
+   ;call printv
+   ld b,122
+   sub b  ; 122 - 122 = 0
+   ;call printv
    ret
 
 printv:
