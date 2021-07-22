@@ -3,30 +3,25 @@
    org $8000
 
 start:
-   ld c,$0
+   ld c,$00
    push bc
    pop af
-   ld a,42
-   ld b,57
-   sub b  ; 42 - 57 = 241 + borrow
-   ;call printv
-   sub b  ; 241 - 57 = 184 (H)
-   ;call printv
-   ld b,180
-   sub b  ; 184 - 180 = 4
-   ;call printv
-   sub b  ; 4 - 180 = 80 + borrow
-   ;call printv
-   sub b  ; 80 - 180 = 156 + borrow (H, overflow)
-   ;call printv
-   sub b  ; 156 - 180 = 232 + borrow
-   ;call printv
-   ld b,110
-   sub b  ; 232 - 110 = 122 (H, overflow)
-   ;call printv
-   ld b,122
-   sub b  ; 122 - 122 = 0
-   ;call printv
+   ld hl,$1234
+   ld de,$5678
+   add hl,de ; HL = $68AC
+   ld c,$ff
+   push bc
+   pop af
+   add hl,de ; HL = $BF24 (overflow?)
+   ld hl,$9ABC
+   add hl,de ; HL = $F134
+   ld de,$1234
+   add hl,de ; HL = $0368 + carry
+   ld de,$89AB
+   ld hl,$CDEF
+   add hl,de ; HL = $579A + carry (overflow?)
+   ld de,$A866
+   add hl,de ; HL = 0
    ret
 
 printv:
