@@ -13,11 +13,6 @@ sp_backup:
    dw 0
 
 start:
-   ; include instructions: ret, call, push, rst, pop (exclude reti, retn)
-   ; specific opcodes: ld sp,xx; inc sp; add hl,sp; add ix,sp; add iy,sp
-   ;                   dec sp; ex (sp),hl; ex (sp),ix; ex (sp),iy
-   ;                   ld sp,hl; ld sp,ix; ld sp,iy; sbc hl,sp; ld (xx),sp
-   ;                   adc hl,sp; ld sp,(xx)
    exx
    push hl              ; preserve HL'
 
@@ -26,6 +21,7 @@ start:
    ld hl,$FF00          ; 16-pixel pattern
    ld bc,BITMAP_SIZE/2  ; whole screen
    call fill_ram        ; fill in pixel data
+
    ld ix,SCREEN_COLOR   ; start at beginning of color attribute memory
    ld hl,$2A2A          ; red on cyan for 2 squares
    ld bc,COLOR_SIZE/2   ; whole screen
