@@ -5,8 +5,8 @@
    jp start
 
    ; ROM routines
-   ROM_CLS     equ $0DAF
-   ROM_PRINT   equ $203C
+ROM_CLS     = $0DAF
+ROM_PRINT   = $203C
 
 header:
    db "[   A  ][   B  ][   C  ][ (HL) ]"
@@ -32,6 +32,40 @@ start:
    ld (hl),%00111100
 
    call binregs
+   rrca
+   rrca
+   call binregs
+   scf
+   sll a
+   sla a
+   call binregs
+   sra a
+   rr b
+   rr c
+   rr (hl)
+   call binregs
+   or b
+   call binregs
+   and c
+   call binregs
+   xor (hl)
+   call binregs
+
+
+   ; set colors
+   ld b,22
+   ld hl,$5800
+.rowloop:
+   ld d,0
+   call setcolor
+   inc d
+   call setcolor
+   inc d
+   call setcolor
+   inc d
+   call setcolor
+   dec b
+   jp nz,.rowloop
 
    pop hl
    exx                  ; restore HL' to gracefully return to BASIC
@@ -54,6 +88,7 @@ bina:
    ld b,8
 .bitloop:
    rlca
+   ld c,a
    jr c,.print1
    ld a,$30
    jp .next
@@ -61,11 +96,22 @@ bina:
    ld a,$31
 .next:
    rst $10
+   ld a,c
    dec b
-   jp nz,.bitloop   
+   jp nz,.bitloop
    pop bc
    ret
 
+setcolor:
+   ld c,8
+.attrloop:
+   ld a,(hl)
+   or d
+   ld (hl),a
+   inc hl
+   dec c
+   jp nz,.attrloop
+   ret
 
 ; Deployment: Snapshot
    SAVESNA "bit.sna", start
