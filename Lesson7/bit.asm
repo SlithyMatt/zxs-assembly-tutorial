@@ -32,23 +32,24 @@ start:
    ld (hl),%00111100
 
    call binregs
-   rrca
-   rrca
+   rrca              ; A: 01101010 --> 00110101, carry clear
+   rrca              ; A: 00110101 --> 10011010, carry set
    call binregs
-   scf
-   sll a
-   sla a
+   scf               ; set carry flag
+   ccf               ; complement carry flag --> clear
+   sll a             ; A: 10011010 --> 00110101, carry set
+   sla a             ; A: 00110101 --> 01101010, carry clear
    call binregs
-   sra a
-   rr b
-   rr c
-   rr (hl)
+   sra a             ; A: 01101010 --> 00110101, carry clear
+   rr b              ; B: 10010101 --> 01001010, carry set
+   rr c              ; C: 11001100 --> 11100110, carry clear
+   rr (hl)           ; (HL): 00111100 --> 00011110, carry clear
    call binregs
-   or b
+   or b              ; A: 00110101 --> 00110101 | 01001010 = 01111111
    call binregs
-   and c
+   and c             ; A: 01111111 --> 01111111 & 11100110 = 01100110
    call binregs
-   xor (hl)
+   xor (hl)          ; A: 01100110 --> 01100110 ^ 00011110 = 01111000
    call binregs
 
 
