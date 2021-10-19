@@ -51,7 +51,19 @@ start:
    call binregs
    xor (hl)          ; A: 01100110 --> 01100110 ^ 00011110 = 01111000
    call binregs
-
+   rld               ; A: 01111000, (HL): 00011110 --> A: 01110001, (HL): 11101000
+   call binregs
+   rrd               ; A: 01110001, (HL): 11101000 --> A: 01111000, (HL): 00011110
+   call binregs
+   set 0,a           ; A: 01111000 --> 01111001
+   res 1,b           ; B: 01001010 --> 01001000
+   call binregs
+   scf               ; set carry flag
+.bitloop:            ; C: 11100110 --> 10011010
+   rl c
+   call binregs
+   bit 4,c
+   jp z,.bitloop
 
    ; set colors
    ld b,22
