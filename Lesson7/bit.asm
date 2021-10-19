@@ -59,7 +59,7 @@ start:
    res 1,b           ; B: 01001010 --> 01001000
    call binregs
    scf               ; set carry flag
-.bitloop:            ; C: 11100110 --> 10011010
+.bitloop:            ; C: 11100110 --> 11001101 --> 10011011
    rl c
    call binregs
    bit 4,c
