@@ -25,6 +25,7 @@ start:
    ld bc,32
    call ROM_PRINT
 
+   ; set initial register values
    ld a,%01101010
    ld b,%10010101
    ld c,%11001100
@@ -66,64 +67,64 @@ start:
    jp z,.bitloop
 
    ; set colors
-   ld b,22
-   ld hl,$5800
+   ld b,22           ; set color attributes for first 22 lines
+   ld hl,$5800       ; starting at top
 .rowloop:
    ld d,0
-   call setcolor
+   call setcolor     ; First column (A) = black
    inc d
-   call setcolor
+   call setcolor     ; B = blue
    inc d
-   call setcolor
+   call setcolor     ; C = red
    inc d
-   call setcolor
+   call setcolor     ; (HL) = magenta
    dec b
-   jp nz,.rowloop
+   jp nz,.rowloop    ; loop until B = 0
 
    pop hl
-   exx                  ; restore HL' to gracefully return to BASIC
+   exx               ; restore HL' to gracefully return to BASIC
    ret
 
-binregs:
-   push af
-   call bina
+binregs:             ; Prints A, B, C and (HL) in binary
+   push af           ; preserve A on stack
+   call bina         ; Print A
    ld a,b
-   call bina
+   call bina         ; Print B
    ld a,c
-   call bina
+   call bina         ; Print C
    ld a,(hl)
-   call bina
-   pop af
+   call bina         ; Print (HL)
+   pop af            ; Restore A
    ret
 
-bina:
-   push bc
-   ld b,8
+bina:                ; Prints A in binary
+   push bc           ; Preserve BC on stack
+   ld b,8            ; Loop for all 8 bits
 .bitloop:
-   rlca
-   ld c,a
-   jr c,.print1
-   ld a,$30
+   rlca              ; Shift high bit of A into carry bit
+   ld c,a            ; Preserve A in C
+   jr c,.print1      ; Print "1" if carry bit set
+   ld a,$30          ; Carry bit clear, A = "0"
    jp .next
 .print1:
-   ld a,$31
+   ld a,$31          ; A = "1"
 .next:
-   rst $10
-   ld a,c
+   rst $10           ; Print character code in A ("0" or "1")
+   ld a,c            ; Restore A
    dec b
-   jp nz,.bitloop
-   pop bc
+   jp nz,.bitloop    ; Continue looping until B = 0
+   pop bc            ; Restore BC
    ret
 
-setcolor:
-   ld c,8
+setcolor:   ; Input: D = new ink color, HL = color attribute address
+   ld c,8            ; Loop for 8 color attributes
 .attrloop:
-   ld a,(hl)
-   or d
-   ld (hl),a
-   inc hl
+   ld a,(hl)         ; A = current color attribute (ink assumed to be black)
+   or d              ; A = A | D (set new ink color)
+   ld (hl),a         ; Write back new color attribute
+   inc hl            ; HL = next color attribute
    dec c
-   jp nz,.attrloop
+   jp nz,.attrloop   ; loop until C = 0
    ret
 
 ; Deployment: Snapshot
