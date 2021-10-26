@@ -36,8 +36,7 @@ start:
    rrca              ; A: 01101010 --> 00110101, carry clear
    rrca              ; A: 00110101 --> 10011010, carry set
    call binregs
-   scf               ; set carry flag
-   ccf               ; complement carry flag --> clear
+   or a              ; clear carry bit
    sll a             ; A: 10011010 --> 00110101, carry set
    sla a             ; A: 00110101 --> 01101010, carry clear
    call binregs
@@ -58,6 +57,8 @@ start:
    call binregs
    set 0,a           ; A: 01111000 --> 01111001
    res 1,b           ; B: 01001010 --> 01001000
+   call binregs
+   cpl               ; A: 01111001 --> 10000110
    call binregs
    scf               ; set carry flag
 .bitloop:            ; C: 11100110 --> 11001101 --> 10011011
