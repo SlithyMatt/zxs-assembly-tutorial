@@ -36,7 +36,6 @@ start:
    rrca              ; A: 01101010 --> 00110101, carry clear
    rrca              ; A: 00110101 --> 10011010, carry set
    call binregs
-   or a              ; clear carry bit
    sll a             ; A: 10011010 --> 00110101, carry set
    sla a             ; A: 00110101 --> 01101010, carry clear
    call binregs
