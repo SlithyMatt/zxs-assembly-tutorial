@@ -12,8 +12,9 @@ start:
    exx
    push hl              ; preserve HL'
 
-   ; demo instructions: nop, daa, halt, di, ei, in, out, retn, im, cpi, cpir
-   ;                    ini, inir, outi, otir, cpd, cpdr, ind, indr, outd, otdr
+   ; demo instructions: in, out, ind, indr, ini, inir, outd, otdr, outi, otir
+
+   
 
 
    pop hl
