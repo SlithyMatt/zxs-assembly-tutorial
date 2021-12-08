@@ -11,6 +11,7 @@ now are the following lessons:
 - Lesson 5: Arithmetic
 - Lesson 6: The Stack
 - Lesson 7: Bit by Bit
+
 *Coming Soon:*
 - Lesson 8: In and Out
 - Lesson 9: The Rest
