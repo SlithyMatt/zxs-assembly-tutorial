@@ -6,6 +6,14 @@ now are the following lessons:
 
 - Lesson 1: The Basics
 - Lesson 2: Addressing Modes
+- Lesson 3: Data in Motion
+- Lesson 4: Conditionality
+- Lesson 5: Arithmetic
+- Lesson 6: The Stack
+- Lesson 7: Bit by Bit
+*Coming Soon:*
+- Lesson 8: In and Out
+- Lesson 9: The Rest
 
 More to come!
 
@@ -19,8 +27,8 @@ with these code examples - it is all [free and open source](LICENSE).
 
 ## Tools Recommended
 - Text Editor: [Atom](https://atom.io/)
-   - Packages: [file-types](https://atom.io/packages/file-types), [language-z80asm](https://atom.io/packages/language-z80asm)
-- Emulator: [ZEsarUX](https://github.com/chernandezba/zesarux)
+   - Packages: [file-types](https://atom.io/packages/file-types), [language-z80asm](https://atom.io/packages/language-z80asm), [language-assembler-sjasmplus](https://atom.io/packages/language-assembler-sjasmplus)
+- Emulators: [ZEsarUX](https://github.com/chernandezba/zesarux), [Fuse](http://fuse-emulator.sourceforge.net/)
 
 ## Further Reading
 
