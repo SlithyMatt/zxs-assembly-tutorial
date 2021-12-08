@@ -22,9 +22,9 @@ start:
    in e,(c)
    ld b,$7F
    in h,(c)
-   ld l,a
    ld b,h
-   ld c,l
+   ld c,a
+   jp start
 
    ; B = SPACE, SYM SHFT, M, N, B
    ; C = SHIFT, Z, X, C, V
