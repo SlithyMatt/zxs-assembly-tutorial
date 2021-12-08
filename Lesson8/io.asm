@@ -9,7 +9,6 @@ start:
    in a,(c)             ; A = key states
    bit 2,a              ; Check bit 2 (X key)
    jp nz,.soundoff      ; If bit is set, key is not pressed, turn off sound
-.soundon:
    ld a,d               ; A = last output byte
    xor $10              ; flip bit 4
    ld d,a               ; save new byte back to D
