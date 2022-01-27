@@ -8,19 +8,19 @@ start:
 
    nop               ; Do absolutely nothing but waste time!
 
-   ld bc,$3657       ; Load 3657 as BCD into BC
-   ld de,$2845       ; Load 2845 as BCD into DE
-   ld a,c
-   add e             ; Add ones and tens places
+   ld hl,$3657       ; Load 3657 as BCD into HL
+   ld bc,$2845       ; Load 2845 as BCD into bc
+   ld a,l
+   add a,c             ; Add ones and tens places
    daa               ; Do BCD adjustment
-   ld c,a
-   ld a,b
-   adc d             ; Add hundreds and thousands places (with possible carry)
+   ld l,a
+   ld a,h
+   adc a,b             ; Add hundreds and thousands places (with possible carry)
    daa               ; Do BCD adjustment
-   ld b,a            ; BC = BC + DE (BCD)
-   call printhex     ; print decimal digits in B (thousands, hundreds)
-   ld a,c
-   call printhex     ; print decimal digits in C (tens, ones)
+   ld h,a            ; HL = HL + BC (BCD)
+   call printhex     ; print decimal digits in H (thousands, hundreds)
+   ld a,l
+   call printhex     ; print decimal digits in L (tens, ones)
    ld a,$0D
    rst $10           ; print newline
 
@@ -56,20 +56,28 @@ start:
    exx               ; restore HL' to gracefully return to BASIC
    ret
 
-printhex: ; print A as hex
-   push af           ; save full byte on stack
+printhex: ; print A as hex byte
+   push af              ; save full byte on stack
    srl a
    srl a
    srl a
-   srl a             ; move upper nybble to lower spot
-   or $30            ; convert to numeral character code
-   rst $10           ; print upper nybble
-   pop af            ; restore byte
-   and $0F           ; clear out upper nybble
-   or $30            ; convert lower nybble to character
-   rst $10           ; print lower nybble
+   srl a                ; move upper nybble to lower spot
+   call printhex_digit  ; print upper nybble
+   pop af               ; restore byte
+   and $0F              ; clear out upper nybble
+   call printhex_digit  ; print lower nybble
    ret
 
+printhex_digit: ; print A as hex digit
+   cp $0A
+   jp p,print_letter
+   or $30
+   jp print_character
+print_letter:
+   add a,$37
+print_character:
+   rst $10
+   ret
 
 ; Deployment: Snapshot
    SAVESNA "bit.sna", start
