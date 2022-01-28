@@ -80,4 +80,4 @@ print_character:
    ret
 
 ; Deployment: Snapshot
-   SAVESNA "bit.sna", start
+   SAVESNA "rest.sna", start
