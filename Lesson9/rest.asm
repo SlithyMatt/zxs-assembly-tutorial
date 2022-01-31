@@ -11,11 +11,11 @@ start:
    ld hl,$3657       ; Load 3657 as BCD into HL
    ld bc,$2845       ; Load 2845 as BCD into bc
    ld a,l
-   add a,c             ; Add ones and tens places
+   add a,c           ; Add ones and tens places
    daa               ; Do BCD adjustment
    ld l,a
    ld a,h
-   adc a,b             ; Add hundreds and thousands places (with possible carry)
+   adc a,b           ; Add hundreds and thousands places (with possible carry)
    daa               ; Do BCD adjustment
    ld h,a            ; HL = HL + BC (BCD)
    call printhex     ; print decimal digits in H (thousands, hundreds)
