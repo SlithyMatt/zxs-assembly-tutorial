@@ -6,8 +6,10 @@
 PRINTOUT    = $09F4
 KEYIN       = $10A8
 
-; ROM Data
-KEYTABLE_D  = $0260
+; Character Codes
+SPACE       = $20
+POUND       = $60
+COPYRIGHT   = $7F
 
 ; Control Codes
 ENTER       = $0D
@@ -19,31 +21,26 @@ start:
 key_loop:
    call KEYIN
    jp nc,key_loop
-   cp $20
-   jp m,check_control
-   cp $80
+   cp POUND
+   jp z,do_ink
+   cp SPACE
+   jp m,check_enter
+   cp COPYRIGHT+1
    jp m,print
 check_control:
    cp ENTER
    jp z,print
-   ld hl,KEYTABLE_D
-   ld b,0
-   ld c,8
-ink_loop:
-   cp (hl)
-   jp z,do_ink
-   inc hl
-   inc b
-   dec c
-   jp nz,ink_loop
    jp key_loop
 do_ink:
    ld a,INK
-   push bc
    call PRINTOUT
-   pop bc
-   ld a,b
-   add a,$30
+ink_loop:
+   call KEYIN
+   jp nc,ink_loop
+   cp $30
+   jp m,key_loop
+   cp $3A
+   jp p,key_loop
 print:
    call PRINTOUT
    jp key_loop
