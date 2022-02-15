@@ -27,7 +27,7 @@ key_loop:
    jp m,check_enter
    cp COPYRIGHT+1
    jp m,print
-check_control:
+check_enter:
    cp ENTER
    jp z,print
    jp key_loop
@@ -41,6 +41,7 @@ ink_loop:
    jp m,key_loop
    cp $3A
    jp p,key_loop
+   sub $30
 print:
    call PRINTOUT
    jp key_loop
