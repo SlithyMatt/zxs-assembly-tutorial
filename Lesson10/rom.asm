@@ -29,8 +29,8 @@ key_loop:
    cp SPACE
    jp m,key_loop        ; If code < space character, ignore
    cp COPYRIGHT+1
-   jp m,print           ; If code <= copyright character, print
-   jp key_loop          ; Else, ignore
+   jp p,key_loop        ; If code > copyright character, ignore
+   jp print             ; Else, print the character
 do_ink:
    ld a,INK
    rst $10              ; "print" INK code

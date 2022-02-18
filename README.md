@@ -11,10 +11,12 @@ now are the following lessons:
 - Lesson 5: Arithmetic
 - Lesson 6: The Stack
 - Lesson 7: Bit by Bit
-
-*Coming Soon:*
 - Lesson 8: In and Out
 - Lesson 9: The Rest
+- Lesson 10: The ROM
+
+*Coming Soon:*
+- Lesson 11: Graphics
 
 More to come!
 
@@ -39,3 +41,4 @@ with these code examples - it is all [free and open source](LICENSE).
 - https://en.wikipedia.org/wiki/Boolean_algebra
 - [Z80 Opcodes](http://z80-heaven.wikidot.com/opcode-reference-chart)
 - [Break Into Program: ZX Spectrum](http://www.breakintoprogram.co.uk/computers/zx-spectrum)
+- [ZX Spectrum ROM Disassembly](https://skoolkid.github.io/rom/maps/all.html)
