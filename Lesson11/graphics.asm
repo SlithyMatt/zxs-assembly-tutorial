@@ -156,10 +156,10 @@ banner:
    db BRIGHT,1,PAPER,7,ENTER,STOP
 
 bitmap:
-
+   INCBIN "bitmap.bin"
 
 attributes:
-
+   INCBIN "colors.bin"
 
 BITMAP_START = $4800 ; start of pixel row 64 (top of character row 8)
 BITMAP_SIZE = 2048   ; 256x64 (all of character rows 8-15)
@@ -202,7 +202,7 @@ end_loop:
    ld a,b
    xor $FF
    ld b,a               ; invert pixel pattern
-   jp end_loop          ; continue loop with new pattern   
+   jp end_loop          ; continue loop with new pattern
 
 ; Deployment: Snapshot
    SAVESNA "graphics.sna", start

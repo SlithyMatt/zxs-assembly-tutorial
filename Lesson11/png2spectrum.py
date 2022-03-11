@@ -47,10 +47,10 @@ if (pngdata.height % 8 != 0):
     if ((pngdata.height + startline) % 8 != 0):
         attrrows = attrrows+1
 
-attributes = [[0 for y in range(attrrows)] for x in range(31)]
+attributes = [[0 for y in range(attrrows)] for x in range(32)]
 
 bmlines_start = startline
-bmlines_stop = startline+pngdata.height-1
+bmlines_stop = startline+pngdata.height
 bmrows = range(bmlines_start,bmlines_stop)
 
 for i in bmrows:
@@ -61,18 +61,18 @@ for i in bmrows:
         bmlines_stop = line
 
 attry_start = int(startline / 8)
-bitmap = [[0 for y in range(bmlines_stop-bmlines_start+1)] for x in range(255)]
+bitmap = [[0 for y in range(bmlines_stop-bmlines_start+1)] for x in range(256)]
 
-for x in range(pngdata.width-1):
+for x in range(pngdata.width):
     bitmapx = x+startcol
     attrx = int(bitmapx / 8)
-    for y in range(pngdata.height-1):
+    for y in range(pngdata.height):
         bitmapy = bitmapline(y+startline) - bmlines_start
-        attry = int(bitmapy / 8) - attry_start
+        attry = int((y+startline) / 8) - attry_start
         isink = False
-        if (bitmapx % 8 == 0) and (bitmapy % 8 == 0):
+        if (x % 8 == 0) and ((y+startline) % 8 == 0):
             attributes[attrx][attry] = colorpixels[x,y] << 3
-        elif (attributes[attrx][attry] & 0xF8) == 0:
+        elif (attributes[attrx][attry] & 0x07) == 0:
             bgcolor = attributes[attrx][attry] >> 3
             if colorpixels[x,y] != bgcolor:
                 if ((colorpixels[x,y] ^ bgcolor) & 0x08) != 0:
@@ -90,6 +90,16 @@ for x in range(pngdata.width-1):
             elif pixelcolor != bgcolor:
                 print("Warning: unexpected color found at ", x, ",", y, ", will be set as paper")
         bitmap[bitmapx][bitmapy] = 1 if isink else 0
+        #print("colorpixels[",x,",",y,"] = ", colorpixels[x,y])
+        #print("bitmap[",bitmapx,",",bitmapy,"] = ", bitmap[bitmapx][bitmapy])
+        #print("attributes[",attrx,"][",attry,"] = ",attributes[attrx][attry])
 
-print(attributes)
-print(bitmap)
+bitmap_array = bytearray(len(bitmap[0])*32)
+# TODO populate bytearray
+outfile = open("bitmap.bin","wb")
+outfile.write(bitmap_array)
+
+attr_array = bytearray(len(attributes[0])*32)
+# TODO populate bytearray
+outfile = open("colors.bin","wb")
+outfile.write(attr_array)
