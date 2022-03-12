@@ -61,7 +61,7 @@ for i in bmrows:
         bmlines_stop = line
 
 attry_start = int(startline / 8)
-bitmap = [[0 for y in range(bmlines_stop-bmlines_start+1)] for x in range(256)]
+bitmap = [[0 for y in range(bmlines_stop-bmlines_start)] for x in range(256)]
 
 for x in range(pngdata.width):
     bitmapx = x+startcol
@@ -95,11 +95,23 @@ for x in range(pngdata.width):
         #print("attributes[",attrx,"][",attry,"] = ",attributes[attrx][attry])
 
 bitmap_array = bytearray(len(bitmap[0])*32)
-# TODO populate bytearray
+i = 0
+for y in range(len(bitmap[0])):
+    for x in range(32):
+        octet = 0
+        for pixel in range(8):
+            bit = bitmap[x*8+pixel][y] << (7 - pixel)
+            octet = octet | bit
+        bitmap_array[i] = octet
+        i = i+1
 outfile = open("bitmap.bin","wb")
 outfile.write(bitmap_array)
 
 attr_array = bytearray(len(attributes[0])*32)
-# TODO populate bytearray
+i = 0
+for y in range(len(attributes[0])):
+    for x in range(32):
+        attr_array[i] = attributes[x][y]
+        i = i+1
 outfile = open("colors.bin","wb")
 outfile.write(attr_array)

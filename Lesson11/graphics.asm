@@ -143,17 +143,19 @@ udg9_bitmap:
 SIZE_UDG = $ - udg0_bitmap
 
 banner:
-   db BRIGHT,1,FLASH,0,PAPER,7,INK,4," ",UDG_0,UDG_1,UDG_2," ",ENTER
-   db UDG_3,UDG_4,UDG_5,UDG_6,UDG_7," ",BRIGHT,0,PAPER,2,INK,7
+   db BRIGHT,1,FLASH,0,PAPER,7,INK,4," ",UDG_0,UDG_1,UDG_2,"  ",BRIGHT,0,PAPER,2
+   db "                      ",ENTER
+   db BRIGHT,1,PAPER,7,UDG_3,UDG_4,UDG_5,UDG_6,UDG_7," ",BRIGHT,0,PAPER,2,INK,7," "
    db GFX_B,GFX_6,GFX_5,GFX_3,GFX_8,GFX_B,GFX_3,GFX_4,GFX_3,GFX_2,GFX_B
    db GFX_3,GFX_5,GFX_8,GFX_5,GFX_1,GFX_7,GFX_3,GFX_4,GFX_3,GFX_2,ENTER
-   db BRIGHT,1,PAPER,7,INK,4,"   ",UDG_8,UDG_9," ",BRIGHT,0,PAPER,2,INK,7
+   db BRIGHT,1,PAPER,7,INK,4,"   ",UDG_8,UDG_9," ",BRIGHT,0,PAPER,2,INK,7," "
    db GFX_B,GFX_2,GFX_5,GFX_3,GFX_8,GFX_B,GFX_2,GFX_0,GFX_3,GFX_8,GFX_B
    db GFX_2,GFX_5,GFX_7,GFX_D,GFX_0,GFX_5,GFX_0,GFX_0,GFX_3,GFX_8,ENTER
-   db BRIGHT,1,PAPER,7,INK,0,"GAMES ",BRIGHT,0,PAPER,2,INK,7
+   db BRIGHT,1,PAPER,7,INK,0,"GAMES ",BRIGHT,0,PAPER,2,INK,7," "
    db GFX_A,GFX_0,GFX_5,GFX_0,GFX_A,GFX_E,GFX_C,GFX_4,GFX_C,GFX_2,GFX_E
    db GFX_C,GFX_5,GFX_0,GFX_7,GFX_0,GFX_5,GFX_0,GFX_4,GFX_C,GFX_2,ENTER
-   db BRIGHT,1,PAPER,7,ENTER,STOP
+   db BRIGHT,1,PAPER,7,"      ",BRIGHT,0,PAPER,2
+   db "                      ",ENTER,STOP
 
 bitmap:
    INCBIN "bitmap.bin"
@@ -168,10 +170,16 @@ ATTR_SIZE = BITMAP_SIZE/8
 
 FOOTER_START = $5000 ; start of pixel row 128 (top of character row 16)
 
+UDG_START = $FF58
+
 start:
    im 1                 ; Use ROM-based interrupt routine
    ei                   ; Enable maskable interrupts
    call CL_ALL          ; Clear screen, reset cursor to top
+   ld hl,udg0_bitmap
+   ld de,UDG_START
+   ld bc,SIZE_UDG
+   ldir                 ; overwrite UDGs with custom bitmaps
    ld hl,banner         ; Load address of start of banner string
 banner_loop:
    ld a,(hl)            ; Get next character from banner
@@ -196,7 +204,7 @@ end_loop:
    ld a,b               ; load pixels into A
    ld (hl),a            ; write pixels to screen bitmap RAM
    inc hl               ; go to next address
-   bit 4,h              ; check to see if it puts us into attribute RAM
+   bit 3,h              ; check to see if it puts us into attribute RAM
    jp z,end_loop        ; if still in bitmap RAM, continue loop
    ld hl,FOOTER_START   ; reset loop to top of footer again
    ld a,b
