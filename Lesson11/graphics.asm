@@ -5,7 +5,7 @@
 ; Routines
 CL_ALL      = $0DAF
 
-; Control Codes
+; Character Codes
 ENTER       = $0D
 INK         = $10
 PAPER       = $11
