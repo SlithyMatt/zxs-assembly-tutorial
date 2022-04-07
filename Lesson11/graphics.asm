@@ -201,8 +201,7 @@ load_bitmap:
    ld b,$ff             ; start end loop with all ink pixels
 end_loop:
    halt                 ; wait for next video frame
-   ld a,b               ; load pixels into A
-   ld (hl),a            ; write pixels to screen bitmap RAM
+   ld (hl),b            ; write pixels to screen bitmap RAM
    inc hl               ; go to next address
    bit 3,h              ; check to see if it puts us into attribute RAM
    jp z,end_loop        ; if still in bitmap RAM, continue loop
