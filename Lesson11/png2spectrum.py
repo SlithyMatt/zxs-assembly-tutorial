@@ -14,7 +14,7 @@ if len(sys.argv) >= 3:
 
 startcol = 0
 if len(sys.argv) >= 4:
-    startline = int(sys.argv[3])
+    startcol = int(sys.argv[3])
 
 pngdata = Image.open(sys.argv[1])
 
