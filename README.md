@@ -14,9 +14,10 @@ now are the following lessons:
 - Lesson 8: In and Out
 - Lesson 9: The Rest
 - Lesson 10: The ROM
+- Lesson 11: Graphics
 
 *Coming Soon:*
-- Lesson 11: Graphics
+- Lesson 12: Interrupts
 
 More to come!
 
