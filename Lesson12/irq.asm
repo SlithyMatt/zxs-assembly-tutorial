@@ -11,14 +11,14 @@ position:
    db 124,0
 
 sprite:
-   db %00011000
    db %00111100
-   db %01111110
+   db %01110110
+   db %11111011
+   db %11111101
    db %11111111
-   db %10111111
-   db %01011110
-   db %00101100
-   db %00011000
+   db %11111111
+   db %01111110
+   db %00111100
 
 line_buffer:
    .256 db 0
@@ -148,7 +148,7 @@ im2_handler:
    inc hl
    inc e
    dec c                      ; decrement loop index for next byte
-   jp nz,.byte_loop
+   jp nz,.byte_loop           ; keep looping for all bytes in line
    ld e,low SCREEN_LINE
    inc d                      ; DE = next line in screen memory
    dec b                      ; decrement loop index for next line
