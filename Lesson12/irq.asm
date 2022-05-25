@@ -61,15 +61,13 @@ main_loop:
    ld a,(HL)                  ; X must be pressed, get current position
    cp 248                     ; check to see if already at the far right end
    jp z,main_loop             ; if already there, don't move, return to top
-   inc a                      ; move one pixel to right
-   jp .store_pos              ; jump ahead to store new position
+   inc (hl)                   ; move one pixel to right
+   jp draw_sprite             ; ready to draw
 .go_left:
    ld a,(HL)                  ; Z must be pressed, get current position
    cp 0
    jp z,main_loop             ; if already zero, don't move, return to top
-   dec a                      ; move one pixel to left
-.store_pos:
-   ld (hl),a                  ; store new position value
+   dec (hl)                   ; move one pixel to left
 
    ; now, update line buffer with new sprite position
 draw_sprite:
