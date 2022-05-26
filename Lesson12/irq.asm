@@ -119,7 +119,6 @@ draw_sprite:
    jp main_loop               ; forever wait for next interrupt
 
 im2_handler:
-   di                         ; disable other interrupts
    ; stash all registers to stack
    push af
    push bc
